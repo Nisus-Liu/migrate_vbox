@@ -5,11 +5,16 @@
 
 
 > *概念:*
+>
 > VB : VirtualBox
+>
 > vbox : VB 列表里看到的虚拟机的抽象表述, 含有两个核心文件: 元数据和磁盘文件. 如: `{虚拟机名}.vbox` 和 `centos-7-1-1.x86_64.vmdk` .
+>
 > Vgrant workspace(ws) : vagrant 工作空间, 一个空间可能关联单个虚拟机或多个虚拟机.
 
+
 vagrant工作空间样例:
+
 ![](assets/5ee729e6.png)
 
 
@@ -22,7 +27,7 @@ vagrant工作空间样例:
 
 ### `migrate_vbox.py`
 
-```shell script
+```
  python migrate_vbox.py --vm E:\\Work\\Vagrant\\VMs\\ws-docker --vbxml C:\\Users\\60906\\.VirtualBox\\VirtualBox.xml
 # --vm : 虚拟机所在目录, 内含 .vbox 和 vmdk(or vdi)
 # --vbxml : VB 的元数据xml文件, 默认在用户目录下
@@ -31,7 +36,7 @@ vagrant工作空间样例:
 
 ### `migrate_vagrant.py`
 
-```shell script
+```
 python migrate_vagrant.py --ws E:\\Work\\Vagrant\\hadoop --vms E:\\Work\\Vagrant\\VMs --vbxml C:\\Users\\60906\\.VirtualBox\\VirtualBox.xml 
 # --ws : vagrant 工作空间
 # --vms : 多个虚拟机所在的父级目录, 如 VB 默认的存储目录. 脚本会在这里扫描需要的虚拟机, 执行迁移.
