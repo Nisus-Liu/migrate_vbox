@@ -47,4 +47,4 @@ python migrate_vagrant.py --ws E:\\Work\\Vagrant\\hadoop --vms E:\\Work\\Vagrant
 
 ## 迁移原理
 
-TODO
+参见博文: https://juejin.im/post/5ee58c3e518825431000803a
