@@ -95,7 +95,7 @@ if __name__ == '__main__':
     # 判断 VB 是否在运行
     #
     if isVBoxRunning():
-        raise AssertionError("Please exit VirtualBox process first! (it will waste a few seconds)")
+        raise AssertionError("Please exit VirtualBox process first! (It may take a few seconds)")
 
 
     if not os.path.exists(vgws):
