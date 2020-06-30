@@ -7,6 +7,10 @@
 迁移vagrant使用的VB虚拟机, 并同步vagrant的虚机id元数据.
 当, vagrant工作目录的id元数据没有变, VB虚机的id也没有改动时, 您仅仅使用 `migrate_vbox` 脚本, 迁移 vbox 即可.
 一旦任何一方发生改变, 导致两者关联不上了. 就需要使用此脚本. 一步到位, 先迁移vbox, 再不同vagrant和VB.
+
+使用:
+
+`migrate_vagrant.py --ws <your vagrant workspace> --vms <your VMs dir> --vbxml <VirtualBox.xml> [--vm-name <VM mame>]`
 """
 import getopt
 import logging
@@ -64,11 +68,17 @@ if __name__ == '__main__':
     vmName = ""
     virtualBoxXml = ""
     argv = sys.argv[1:]
+    usage = 'migrate_vagrant.py --ws <your vagrant workspace> --vms <your VMs dir> --vbxml <VirtualBox.xml> [--vm-name <VM mame>]'
     try:
         opts, args = getopt.getopt(argv,"",["ws=", "vms=", "vbxml=", "vm-name="])
     except getopt.GetoptError as e:
-        print('migrate_vagrant.py --ws <your vagrant workspace> --vms <your VMs dir> --vbxml <VirtualBox.xml> [--vm-name <VM mame>]')
+        print(usage)
         sys.exit(2)
+
+    if(len(opts)<4):
+        print(usage)
+        sys.exit(2)
+
     for opt, arg in opts:
         if opt in ("--ws"):
             vgws = arg

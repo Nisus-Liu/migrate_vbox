@@ -7,6 +7,10 @@
 适用场景:
 1. 别处复制过来VB镜像文件, 想要放到当前电脑的VB中复用;
 2. VB重装了, 旧的虚机信息丢失. 但磁盘文件还在, 还是可以复用的;
+
+使用:
+
+`migrate_vbox.py --vm <your vm dir> --vbxml <VirtualBox.xml>`
 """
 import os
 import logging
@@ -183,11 +187,17 @@ if __name__ == '__main__':
     vmDir = ""
     virtualBoxXml = ""
     argv = sys.argv[1:]
+    usage = 'migrate_vbox.py --vm <your vm dir> --vbxml <VirtualBox.xml>'
     try:
         opts, args = getopt.getopt(argv,"",["vm=","vbxml="])
     except getopt.GetoptError as e:
-        print('migrate_vbox.py --vm <your vm dir> --vbxml <VirtualBox.xml>')
+        print(usage)
         sys.exit(2)
+
+    if(len(opts)<2):
+        print(usage)
+        sys.exit(2)
+
     for opt, arg in opts:
         if opt in ("--vm"):
             vmDir = arg
