@@ -30,7 +30,7 @@ def migrate_vagrant(vgws, vmsDir, virtualBoxXml, vmName=""):
 
 
     # 单机目录样式: .vagrant\machines\default\virtualbox\id
-    # 多机目录样式: machines\{机器名xxx}\virtualbox\id
+    # 多机目录样式: .vagrant\machines\{机器名xxx}\virtualbox\id
     machinesPath = os.path.join(vgws, ".vagrant" + os.sep + "machines")
     machineNames = os.listdir(machinesPath)
     vagrantIdFileList = []

@@ -2,22 +2,25 @@
 # -*- coding: utf-8 -*-
 # 60906 2020/6/12
 """
-迁移 virtual box
+迁移已有 virtual box (含 x.vbox, x.vmdk ), 注册到新的 VirtualBox 中.
 
 适用场景:
-1. 别处复制过来VB镜像文件, 想要放到当前电脑的VB中复用;
-2. VB重装了, 旧的虚机信息丢失. 但磁盘文件还在, 还是可以复用的;
+case 1: 别处复制过来VB镜像文件, 想要放到当前电脑的VB中复用;
+case 2: VB重装了, 旧的虚机信息丢失. 但磁盘文件还在, 还是可以复用的;
 
 使用:
 
 `migrate_vbox.py --vm <your vm dir> --vbxml <VirtualBox.xml>`
 """
+# TODO 自动查找 VB xml 位置, 交互提示用户确认.
+
 import os
 import logging
 from xml.dom import minidom
 from xml.dom.minidom import  parse as parse
 import psutil
 import sys, getopt
+import argparse
 
 logging.basicConfig(level=logging.INFO)
 
@@ -172,7 +175,7 @@ def migrate_vbox(vmDir, virtualBoxXml):
 
     with open(virtualBoxXml, 'w') as f:
         # 缩进 - 换行 - 编码
-        VbXml.writexml(f, addindent='  ',newl='\n', encoding='utf-8')
+        VbXml.writexml(f, addindent='  ', newl='\n', encoding='utf-8')
         logging.info("writexml success!")
 
     return vboxId
@@ -184,25 +187,13 @@ if __name__ == '__main__':
     # virtualBoxXml = 'C:\\Users\\60906\\.VirtualBox\\VirtualBox.xml'
     # --vm /path/to/my_vm
     # --vbxml /home/you/.VirtualBox/VirtualBox.xml
-    vmDir = ""
-    virtualBoxXml = ""
-    argv = sys.argv[1:]
-    usage = 'migrate_vbox.py --vm <your vm dir> --vbxml <VirtualBox.xml>'
-    try:
-        opts, args = getopt.getopt(argv,"",["vm=","vbxml="])
-    except getopt.GetoptError as e:
-        print(usage)
-        sys.exit(2)
 
-    if(len(opts)<2):
-        print(usage)
-        sys.exit(2)
-
-    for opt, arg in opts:
-        if opt in ("--vm"):
-            vmDir = arg
-        elif opt in ("--vbxml"):
-            virtualBoxXml = arg
+    parser = argparse.ArgumentParser(usage = 'migrate_vbox.py --vm <your vm dir> --vbxml <VirtualBox.xml>', description="迁移已有 virtual box (含 x.vbox, x.vmdk ), 注册到新的 VirtualBox 中.")
+    parser.add_argument('--vm', type=str, required=True, help='path of your virtual machine, includes `x.vbox` and `x.vmdk`')
+    parser.add_argument('--vbxml', type=str, required=True, help='VirtualBox.xml , may like "C:/Users/<user name>/.VirtualBox/VirtualBox.xml"')
+    args = parser.parse_args()
+    vmDir = args.vm
+    virtualBoxXml = args.vbxml
     print("VM dir: ", vmDir)
     print("VirtualBox xml: ", virtualBoxXml)
 
@@ -226,3 +217,26 @@ if __name__ == '__main__':
 
 
 
+# trash #
+# getopt 处理参数
+# vmDir = ""
+# virtualBoxXml = ""
+# argv = sys.argv[1:]
+# usage = 'migrate_vbox.py --vm <your vm dir> --vbxml <VirtualBox.xml>'
+# try:
+#     opts, args = getopt.getopt(argv,"",["vm=","vbxml="])
+# except getopt.GetoptError as e:
+#     print(usage)
+#     sys.exit(2)
+#
+# if(len(opts)<2):
+#     print(usage)
+#     sys.exit(2)
+#
+# for opt, arg in opts:
+#     if opt in ("--vm"):
+#         vmDir = arg
+#     elif opt in ("--vbxml"):
+#         virtualBoxXml = arg
+# print("VM dir: ", vmDir)
+# print("VirtualBox xml: ", virtualBoxXml)
