@@ -11,6 +11,9 @@ case 2: VB重装了, 旧的虚机信息丢失. 但磁盘文件还在, 还是可�
 使用:
 
 `migrate_vbox.py --vm <your vm dir> --vbxml <VirtualBox.xml>`
+
+查看 help :
+`python migrate_vbox.py -h`
 """
 # TODO 自动查找 VB xml 位置, 交互提示用户确认.
 
@@ -190,14 +193,23 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(usage = 'migrate_vbox.py --vm <your vm dir> --vbxml <VirtualBox.xml>', description="迁移已有 virtual box (含 x.vbox, x.vmdk ), 注册到新的 VirtualBox 中.")
     parser.add_argument('--vm', type=str, required=True, help='path of your virtual machine, includes `x.vbox` and `x.vmdk`')
-    parser.add_argument('--vbxml', type=str, required=True, help='VirtualBox.xml , may like "C:/Users/<user name>/.VirtualBox/VirtualBox.xml"')
+    parser.add_argument('--vbxml', type=str, help='Optional, VirtualBox.xml , may like "C:/Users/<user name>/.VirtualBox/VirtualBox.xml"')
     args = parser.parse_args()
     vmDir = args.vm
     virtualBoxXml = args.vbxml
+    if virtualBoxXml is None:
+        # userdir + .VirtualBox + VirtualBox.xml
+        virtualBoxXml = os.path.join(os.path.expanduser('~'), '.VirtualBox', 'VirtualBox.xml')
+        # 提示用户 vbxml 是否正确
+        p = input('Please confirm VirtualBox.xml is corrected: `' + virtualBoxXml +
+                  '`\nOK: [Enter]; Other: [input your VirtualBox.xml]\n>')
+        if p !='':
+            virtualBoxXml = p
+
     print("VM dir: ", vmDir)
     print("VirtualBox xml: ", virtualBoxXml)
 
-
+    exit()
 
     #
     # 判断 VB 是否在运行

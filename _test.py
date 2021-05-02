@@ -6,7 +6,23 @@ import os
 # from migrate_vagrant import migrate_vagrant
 # from migrate_vbox import migrate_vbox
 
-print("碗面")
+def let_user_pick(options):
+    print("Please choose:")
+    for idx, element in enumerate(options):
+        print("{}) {}".format(idx+1,element))
+    res = None
+    while res is None:
+        i = input("Enter number: ")
+        if i == '':
+            # exit
+            return -1
+        try:
+            if 0 < int(i) <= len(options):
+                res = int(i)
+                break
+        except:
+            pass
+    return res
 
 
 if __name__ == "__main__":
@@ -17,4 +33,8 @@ if __name__ == "__main__":
     #     vidf.write("vboxId")
     # print(os.path.dirname("E:\\Work\\Vagrant\\Kits\\migrate_vbox\\a\\b\\c.txt"))
     # print(os.path.dirname("./a/b/c.txt"))
-    print('hello')
+    p = input("路径正确吗?")
+    if p=='':
+        print("对的")
+    else:
+        print("新的路径: " + p)
