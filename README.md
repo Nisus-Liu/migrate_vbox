@@ -30,7 +30,7 @@ vagrant工作空间样例:
 ```
 python migrate_vbox.py --vm E:\\Work\\Vagrant\\VMs\\ws-docker --vbxml C:\\Users\\60906\\.VirtualBox\\VirtualBox.xml
 # --vm : 虚拟机所在目录, 内含 `.vbox` 和 `.vmdk`(or `.vdi`)
-# --vbxml : VB 的元数据xml文件, 默认在用户目录下
+# --vbxml : VB 的元数据xml文件, 默认在用户目录下. 可选.
 # python migrate_vbox.py -h 查看help
 ```
 上述脚本是将指定的 vbox 关联(注册)到新的 VB 中. 新 VB 中就可以看到和管理维护旧的虚拟机了. 实现"迁移"的效果.
