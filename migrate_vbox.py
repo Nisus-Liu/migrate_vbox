@@ -15,7 +15,7 @@ case 2: VB重装了, 旧的虚机信息丢失. 但磁盘文件还在, 还是可�
 查看 help :
 `python migrate_vbox.py -h`
 """
-# TODO 自动查找 VB xml 位置, 交互提示用户确认.
+# Done 自动查找 VB xml 位置, 交互提示用户确认.
 
 import os
 import logging
@@ -208,8 +208,6 @@ if __name__ == '__main__':
 
     print("VM dir: ", vmDir)
     print("VirtualBox xml: ", virtualBoxXml)
-
-    exit()
 
     #
     # 判断 VB 是否在运行
