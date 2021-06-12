@@ -25,6 +25,8 @@ import psutil
 import sys, getopt
 import argparse
 
+from util import pick_virtual_box_xml_path
+
 logging.basicConfig(level=logging.INFO)
 
 # ==由于minidom默认的writexml()函数在读取一个xml文件后，修改后重新写入如果加了newl='\n',会将原有的xml中写入多余的行
@@ -197,14 +199,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     vmDir = args.vm
     virtualBoxXml = args.vbxml
-    if virtualBoxXml is None:
-        # userdir + .VirtualBox + VirtualBox.xml
-        virtualBoxXml = os.path.join(os.path.expanduser('~'), '.VirtualBox', 'VirtualBox.xml')
-        # 提示用户 vbxml 是否正确
-        p = input('Please confirm VirtualBox.xml is corrected: `' + virtualBoxXml +
-                  '`\nOK: [Enter]; Other: [input your VirtualBox.xml]\n>')
-        if p !='':
-            virtualBoxXml = p
+    virtualBoxXml = pick_virtual_box_xml_path(virtualBoxXml)
 
     print("VM dir: ", vmDir)
     print("VirtualBox xml: ", virtualBoxXml)
